@@ -19,7 +19,6 @@ export function CloseShiftModal({ shift }: CloseShiftModalProps) {
     shift.shiftData ? shift.shiftData.collectedCash : ""
   );
 
-  const router = useRouter();
   return (
     <>
       <Modal opened={opened} onClose={close} title={`Close Shift - ${shift.name}`} centered>
@@ -63,6 +62,7 @@ export function CloseShiftModal({ shift }: CloseShiftModalProps) {
                 if (shift.shiftData) {
                   await updateShift(
                     shift.shiftData.shiftID,
+                    shift.center,
                     shift.name,
                     date,
                     shift.cashTotal.amount / 100,
@@ -71,6 +71,7 @@ export function CloseShiftModal({ shift }: CloseShiftModalProps) {
                   );
                 } else {
                   await postShift(
+                    shift.center,
                     shift.name,
                     date,
                     shift.cashTotal.amount / 100,

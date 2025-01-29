@@ -2,22 +2,13 @@
 import axios from "axios";
 
 export async function postShift(
+  center: string,
   shiftName: string,
   date: string,
   cash: number,
   cashCollected: number,
   refunds: number
 ) {
-  console.log(
-    JSON.stringify({
-      name: shiftName,
-      shift: 1,
-      date: date,
-      cash: cash,
-      collectedCash: cashCollected,
-      refunds: refunds,
-    })
-  );
   const url = new URL(
     `/v2/shifts`,
     process.env.NODE_ENV === "production"
@@ -28,6 +19,7 @@ export async function postShift(
   axios.post(
     url.toString(),
     {
+      center: center,
       name: shiftName,
       shift: 1,
       date: date.split("T")[0],

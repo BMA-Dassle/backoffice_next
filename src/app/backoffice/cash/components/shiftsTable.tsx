@@ -37,6 +37,7 @@ type ShiftData = {
     precision: number;
   };
   shiftData: any;
+  center: string;
 };
 
 interface CashTableProps {
@@ -114,7 +115,10 @@ export const CashTable = ({ centerID }: CashTableProps) => {
         enableColumnFilter: false,
       },
       {
-        accessorFn: (row) => row,
+        accessorFn: (row) => {
+          row.center = centerID;
+          return row;
+        },
         Cell: ({ cell }) => <CloseShiftModal shift={cell.getValue()} />,
         header: "Close Shift Modal",
       },
