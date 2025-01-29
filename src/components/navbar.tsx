@@ -49,7 +49,7 @@ export function Navbar({ linksData }: NavbarProps) {
         <Image
           component={NextImage}
           src={"/BOWL_HP_logo_Text.png"}
-          alt="My image"
+          alt="HP Logo"
           width={1080}
           height={1080}
           fit="contain"
