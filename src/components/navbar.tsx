@@ -1,16 +1,16 @@
 "use client";
 
-import { ForwardRefExoticComponent, RefAttributes, useState } from "react";
+import { ForwardRefExoticComponent, RefAttributes, useEffect, useState } from "react";
 import { Group } from "@mantine/core";
 import classes from "./navbar.module.css";
 import { Image } from "@mantine/core";
 import dayjs from "dayjs";
 import { IconProps, Icon } from "@tabler/icons-react";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import NextImage from "next/image";
 import { DateInput, DatePickerInput } from "@mantine/dates";
 import { useAppSelector, useAppDispatch } from "@/app/lib/redux/hooks";
-import { setDate } from "@/app/lib/redux/reducers/report";
+import { setCenter, setDate } from "@/app/lib/redux/reducers/report";
 
 interface NavbarProps {
   linksData: Link[];
@@ -26,6 +26,8 @@ export function Navbar({ linksData }: NavbarProps) {
   const router = useRouter();
   const pathname = usePathname();
   const date = useAppSelector((state) => state.report.date);
+  const searchParams = useSearchParams();
+  const searchCenter = searchParams.get("center");
   const dispatch = useAppDispatch();
 
   const links = linksData.map((item) => (

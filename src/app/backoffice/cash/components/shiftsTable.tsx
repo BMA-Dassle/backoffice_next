@@ -39,7 +39,11 @@ type ShiftData = {
   shiftData: any;
 };
 
-export const CashTable = () => {
+interface CashTableProps {
+  centerID: string;
+}
+
+export const CashTable = ({ centerID }: CashTableProps) => {
   //data and fetching state
   const [data, setData] = useState<ShiftData[]>([]);
   const [isError, setIsError] = useState(false);
@@ -57,7 +61,6 @@ export const CashTable = () => {
   //if you want to avoid useEffect, look at the React Query example instead
   useEffect(() => {
     const fetchData = async () => {
-      console.log(data.length);
       if (!data.length) {
         setIsLoading(true);
       } else {
@@ -66,7 +69,7 @@ export const CashTable = () => {
 
       try {
         const jsonData = (await getShiftReport(
-          "TXBSQN0FEKQ11",
+          centerID,
           dayjs(date).format("YYYY-MM-DD")
         )) as ShiftApiResponse;
         const combinedData = jsonData.data.conqueror.concat(jsonData.data.square);
