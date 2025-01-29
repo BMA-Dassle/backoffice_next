@@ -60,7 +60,7 @@ export function Navbar({ linksData }: NavbarProps) {
           label="Pick date"
           placeholder="Pick date"
           value={dayjs(date).toDate()}
-          onChange={(val) => dispatch(setDate(val?.toISOString()))}
+          onChange={(val) => dispatch(setDate(dayjs(val).toISOString()))}
           maxDate={dayjs(new Date()).toDate()}
         />
       </Group>
