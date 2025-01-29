@@ -1,6 +1,6 @@
 "use client";
 
-import { AppShell, Burger, Group } from "@mantine/core";
+import { AppShell, Burger, Group, Paper } from "@mantine/core";
 import { Navbar } from "../../components/navbar";
 import { useAppSelector, useAppDispatch } from "../lib/redux/hooks";
 import { setHidden } from "../lib/redux/reducers/menu";
@@ -46,7 +46,12 @@ export default function BackofficeLayout({
         <AppShell.Navbar>
           <Navbar linksData={links} />
         </AppShell.Navbar>
-        <AppShell.Main>{children}</AppShell.Main>
+
+        <AppShell.Main>
+          <Paper shadow="xs" p="xl">
+            {children}
+          </Paper>
+        </AppShell.Main>
       </AppShell>
     </>
   );
