@@ -6,6 +6,7 @@ import {
   ColorSchemeScript,
   MantineColorsTuple,
   MantineProvider,
+  Paper,
   createTheme,
   mantineHtmlProps,
 } from "@mantine/core";
@@ -58,7 +59,9 @@ export default function RootLayout({
               timezone: "America/New_York",
             }}
           >
-            <StoreProvider>{children}</StoreProvider>
+            <StoreProvider>
+              <Paper>{children}</Paper>
+            </StoreProvider>
           </DatesProvider>
         </MantineProvider>
       </body>

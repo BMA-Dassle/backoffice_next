@@ -46,12 +46,7 @@ export default function BackofficeLayout({
         <AppShell.Navbar>
           <Navbar linksData={links} />
         </AppShell.Navbar>
-
-        <AppShell.Main>
-          <Paper shadow="xs" p="xl">
-            {children}
-          </Paper>
-        </AppShell.Main>
+        <AppShell.Main>{children}</AppShell.Main>
       </AppShell>
     </>
   );
