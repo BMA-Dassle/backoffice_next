@@ -13,7 +13,7 @@ export async function postShift(
     `/v2/shifts`,
     process.env.NODE_ENV === "production"
       ? "https://bma-pandora-api.azurewebsites.net"
-      : "https://parrot-secure-grizzly.ngrok-free.app"
+      : "https://bma-pandora-api.azurewebsites.net"
   );
 
   axios.post(
