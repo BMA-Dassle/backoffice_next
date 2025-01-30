@@ -123,7 +123,7 @@ export const CashTable = ({ centerID }: CashTableProps) => {
         header: "Close Shift Modal",
       },
     ],
-    []
+    [centerID]
   );
 
   const table = useMantineReactTable({
