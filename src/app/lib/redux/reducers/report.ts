@@ -1,5 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
 
 interface ReportState {
   date: string;
@@ -7,7 +9,7 @@ interface ReportState {
 }
 
 const initialState: ReportState = {
-  date: dayjs(new Date()).toDate().toISOString(),
+  date: dayjs.tz(new Date(), "America/New_York").format("YYYY-MM-DD"),
   center: "TXBSQN0FEKQ11",
 };
 
