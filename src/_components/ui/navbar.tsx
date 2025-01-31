@@ -1,33 +1,32 @@
 "use client";
 
-import { ForwardRefExoticComponent, RefAttributes, useEffect, useState } from "react";
+import { ForwardRefExoticComponent, RefAttributes } from "react";
 import { Group } from "@mantine/core";
-import classes from "./navbar.module.css";
+import classes from "@/_components/ui/navbar.module.css";
 import { Image } from "@mantine/core";
 import dayjs from "dayjs";
 import { IconProps, Icon } from "@tabler/icons-react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import NextImage from "next/image";
-import { DateInput, DatePickerInput } from "@mantine/dates";
-import { useAppSelector, useAppDispatch } from "@/app/lib/redux/hooks";
-import { setCenter, setDate } from "@/app/lib/redux/reducers/report";
+import { DatePickerInput } from "@mantine/dates";
+import { useAppSelector, useAppDispatch } from "@/lib/redux/hooks";
+import { setDate } from "@/lib/redux/reducers/report";
 
 interface NavbarProps {
   linksData: Link[];
+  noDatePicker?: boolean;
 }
 
-type Link = {
+export type Link = {
   link: string;
   label: string;
   icon: ForwardRefExoticComponent<IconProps & RefAttributes<Icon>>;
 };
 
-export function Navbar({ linksData }: NavbarProps) {
+export function Navbar({ linksData, noDatePicker = false }: NavbarProps) {
   const router = useRouter();
   const pathname = usePathname();
   const date = useAppSelector((state) => state.report.date);
-  const searchParams = useSearchParams();
-  const searchCenter = searchParams.get("center");
   const dispatch = useAppDispatch();
 
   const links = linksData.map((item) => (
@@ -57,15 +56,19 @@ export function Navbar({ linksData }: NavbarProps) {
           fit="contain"
         />
       </Group>
-      <Group className={classes.header} justify="center">
-        <DatePickerInput
-          label="Pick date"
-          placeholder="Pick date"
-          value={dayjs(date).toDate()}
-          onChange={(val) => dispatch(setDate(dayjs(val).format("YYYY-MM-DD")))}
-          maxDate={dayjs(new Date()).toDate()}
-        />
-      </Group>
+      {!noDatePicker && (
+        <Group className={classes.header} justify="center">
+          {!noDatePicker && (
+            <DatePickerInput
+              label="Pick date"
+              placeholder="Pick date"
+              value={dayjs(date).toDate()}
+              onChange={(val) => dispatch(setDate(dayjs(val).format("YYYY-MM-DD")))}
+              maxDate={dayjs(new Date()).toDate()}
+            />
+          )}
+        </Group>
+      )}
       {links}
     </nav>
   );

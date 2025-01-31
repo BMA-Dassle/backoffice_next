@@ -1,4 +1,4 @@
-import { CashTable } from "../components/shiftsTable";
+import { CashTable } from "../_components/shiftsTable";
 
 export async function CashPage({ params }: { params: Promise<{ centerID: string }> }) {
   return (

@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { IconCalendarStats, IconChevronRight } from "@tabler/icons-react";
-import { Box, Collapse, Group, Text, ThemeIcon, UnstyledButton } from "@mantine/core";
+import { IconChevronRight } from "@tabler/icons-react";
+import { Box, Collapse, Group, Text, UnstyledButton } from "@mantine/core";
 import classes from "./linksGroup.module.css";
 
 interface LinksGroupProps {

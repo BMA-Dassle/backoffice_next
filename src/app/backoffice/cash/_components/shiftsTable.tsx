@@ -11,8 +11,8 @@ import {
   type MRT_ColumnFiltersState,
   type MRT_SortingState,
 } from "mantine-react-table";
-import { getShiftReport } from "../actions/getShiftReport";
-import { useAppSelector } from "@/app/lib/redux/hooks";
+import { getShiftReport } from "../_actions/getShiftReport";
+import { useAppSelector } from "@/lib/redux/hooks";
 import dayjs from "dayjs";
 import { CloseShiftModal } from "./shiftModal";
 

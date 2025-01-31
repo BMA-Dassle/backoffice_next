@@ -10,10 +10,9 @@ import {
   createTheme,
   mantineHtmlProps,
 } from "@mantine/core";
-import StoreProvider from "@/components/storeProvider";
+import StoreProvider from "@/_components/providers/storeProvider";
 import { DatesProvider } from "@mantine/dates";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import ReactQueryProvider from "./queryProvider";
 
 export const metadata = {
   title: "My Mantine app",
@@ -59,9 +58,11 @@ export default function RootLayout({
               timezone: "America/New_York",
             }}
           >
-            <StoreProvider>
-              <Paper>{children}</Paper>
-            </StoreProvider>
+            <ReactQueryProvider>
+              <StoreProvider>
+                <Paper>{children}</Paper>
+              </StoreProvider>
+            </ReactQueryProvider>
           </DatesProvider>
         </MantineProvider>
       </body>

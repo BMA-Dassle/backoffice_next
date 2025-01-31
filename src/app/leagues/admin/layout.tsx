@@ -1,10 +1,10 @@
 "use client";
 
 import { AppShell, Burger, Group, Paper } from "@mantine/core";
-import { Navbar } from "../../components/navbar";
-import { useAppSelector, useAppDispatch } from "../lib/redux/hooks";
-import { setHidden } from "../lib/redux/reducers/menu";
-import { IconCash } from "@tabler/icons-react";
+import { Link, Navbar } from "@/_components/ui/navbar";
+import { useAppSelector, useAppDispatch } from "@/lib/redux/hooks";
+import { setHidden } from "@/lib/redux/reducers/menu";
+import { IconCash, IconCoins, IconTrophy } from "@tabler/icons-react";
 
 export default function LeagueLayout({
   children,
@@ -14,7 +14,10 @@ export default function LeagueLayout({
   const hidden = useAppSelector((state) => state.menu.hidden);
   const dispatch = useAppDispatch();
 
-  const links = [{ link: "/leagues", label: "Closeout Cash Sheet", icon: IconCash }];
+  const links: Link[] = [
+    { link: "/leagues/admin/leagues", label: "League Management", icon: IconTrophy },
+    { link: "/leagues/admin/entries", label: "League Entries", icon: IconCoins },
+  ];
 
   return (
     <>

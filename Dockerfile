@@ -34,6 +34,7 @@ COPY package*.json ./
 RUN npm ci --omit=dev
 
 COPY --from=builder /usr/src/app/.next ./.next
+COPY --from=builder /usr/src/app/public ./public
 
 EXPOSE 80
 EXPOSE 443

@@ -1,8 +1,8 @@
 "use server";
 
-export async function getShiftReport(centerID: string) {
+export async function getLeague(): Promise<any> {
   const url = new URL(
-    `/v2/square/locations`,
+    `/v2/leagues/`,
     process.env.NODE_ENV === "production"
       ? "https://bma-pandora-api.azurewebsites.net"
       : "https://parrot-secure-grizzly.ngrok-free.app"

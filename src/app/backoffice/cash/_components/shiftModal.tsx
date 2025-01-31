@@ -3,10 +3,9 @@ import classes from "./closeoutButton.module.css";
 import { useDisclosure } from "@mantine/hooks";
 import { Text } from "@mantine/core";
 import { useState } from "react";
-import { postShift } from "../actions/postShift";
-import { useAppSelector } from "@/app/lib/redux/hooks";
-import { updateShift } from "../actions/updateShift";
-import { useRouter } from "next/navigation";
+import { postShift } from "../_actions/postShift";
+import { useAppSelector } from "@/lib/redux/hooks";
+import { updateShift } from "../_actions/updateShift";
 
 interface CloseShiftModalProps {
   shift: any;

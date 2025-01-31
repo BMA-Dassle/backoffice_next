@@ -13,7 +13,7 @@ export async function postShift(
     `/v2/shifts`,
     process.env.NODE_ENV === "production"
       ? "https://bma-pandora-api.azurewebsites.net"
-      : "https://bma-pandora-api.azurewebsites.net"
+      : "https://parrot-secure-grizzly.ngrok-free.app/"
   );
 
   axios.post(
@@ -22,7 +22,7 @@ export async function postShift(
       center: center,
       name: shiftName,
       shift: 1,
-      date: date.split("T")[0],
+      date: date,
       cash: cash,
       collectedCash: cashCollected,
       refunds: refunds,
