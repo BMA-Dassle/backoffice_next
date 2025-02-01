@@ -3,7 +3,7 @@
 import { Button, Grid, Group, Modal } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { forwardRef, useImperativeHandle } from "react";
-import { LeagueData } from "@/app/leagues/definitions";
+import { LeagueData } from "@/_types/leagues";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";

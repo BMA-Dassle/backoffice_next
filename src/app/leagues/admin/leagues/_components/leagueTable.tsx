@@ -14,7 +14,7 @@ import {
 import { listLeagues } from "../../../_actions/listLeagues";
 import { IconCheck, IconX } from "@tabler/icons-react";
 import { Center, ThemeIcon, Text, Button, Box } from "@mantine/core";
-import { LeagueData, LeaguesApiResponse } from "@/app/leagues/definitions";
+import { LeagueData, LeaguesApiResponse } from "@/_types/leagues";
 import { EditLeagueModal } from "./editLeagueModal";
 
 export const LeagueTable = () => {

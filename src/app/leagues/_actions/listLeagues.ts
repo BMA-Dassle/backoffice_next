@@ -1,6 +1,6 @@
 "use server";
 
-import { LeaguesApiResponse } from "../definitions";
+import { LeaguesApiResponse } from "../../../_types/leagues";
 
 export async function listLeagues(): Promise<LeaguesApiResponse> {
   const url = new URL(

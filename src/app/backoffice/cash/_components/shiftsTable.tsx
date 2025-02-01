@@ -15,131 +15,165 @@ import { getShiftReport } from "../_actions/getShiftReport";
 import { useAppSelector } from "@/lib/redux/hooks";
 import dayjs from "dayjs";
 import { CloseShiftModal } from "./shiftModal";
-
-type ShiftApiResponse = {
-  success: boolean;
-  data: {
-    conqueror: Array<ShiftData>;
-    square: Array<ShiftData>;
-  };
-};
-
-type ShiftData = {
-  name: string;
-  cashTotal: {
-    amount: number;
-    currency: string;
-    precision: number;
-  };
-  refundTotal: {
-    amount: number;
-    currency: string;
-    precision: number;
-  };
-  shiftData: any;
-  center: string;
-};
+import { useQuery } from "@tanstack/react-query";
+import { ShiftApiResponse, ShiftData } from "@/_types/shifts";
+import { Tooltip, ActionIcon, Text } from "@mantine/core";
+import { IconRefresh } from "@tabler/icons-react";
 
 interface CashTableProps {
   centerID: string;
 }
 
-export const CashTable = ({ centerID }: CashTableProps) => {
-  //data and fetching state
-  const [data, setData] = useState<ShiftData[]>([]);
-  const [isError, setIsError] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isRefetching, setIsRefetching] = useState(false);
-  const [rowCount, setRowCount] = useState(0);
+const useGetShifts = (centerID: string, date: string) => {
+  return useQuery({
+    queryKey: ["shifts"],
+    queryFn: () => getShiftReport(centerID, dayjs(date).format("YYYY-MM-DD")),
+    staleTime: 1 * (60 * 1000),
+    initialData: {
+      success: false,
+      data: {
+        conqueror: [],
+        square: [],
+      },
+    },
+    select: (data: ShiftApiResponse) => data.data.conqueror.concat(data.data.square),
+  });
+};
 
-  //table state
+export const CashTable = ({ centerID }: CashTableProps) => {
   const [columnFilters, setColumnFilters] = useState<MRT_ColumnFiltersState>([]);
   const [globalFilter, setGlobalFilter] = useState("");
   const [sorting, setSorting] = useState<MRT_SortingState>([]);
-
+  const [totalCollected, setCollected] = useState(0);
   const date = useAppSelector((state) => state.report.date);
 
-  //if you want to avoid useEffect, look at the React Query example instead
-  useEffect(() => {
-    const fetchData = async () => {
-      if (!data.length) {
-        setIsLoading(true);
-      } else {
-        setIsRefetching(true);
-      }
+  const { data, isError, isFetching, isLoading, refetch } = useGetShifts(centerID, date);
 
-      try {
-        const jsonData = (await getShiftReport(
-          centerID,
-          dayjs(date).format("YYYY-MM-DD")
-        )) as ShiftApiResponse;
-        const combinedData = jsonData.data.conqueror.concat(jsonData.data.square);
-        setData(combinedData);
-        setRowCount(combinedData.length);
-      } catch (error) {
-        setIsError(true);
-        console.error(error);
-        return;
-      }
-      setIsError(false);
-      setIsLoading(false);
-      setIsRefetching(false);
-    };
-    fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    refetch();
   }, [date]);
+
+  useEffect(() => {
+    refetch();
+    setCollected(
+      data.reduce((acc, curr) => {
+        if (curr.shiftData) {
+          return acc + Number(curr.shiftData.collectedCash);
+        } else {
+          return acc;
+        }
+      }, 0)
+    );
+  }, [data]);
+
+  const totalRefunds = useMemo(
+    () => data!.reduce((acc, curr) => acc + curr.refundTotal.amount, 0) / 100,
+    [data]
+  );
+
+  const totalNeeded = useMemo(
+    () => data!.reduce((acc, curr) => acc + curr.cashTotal.amount, 0) / 100,
+    [data]
+  );
 
   const columns = useMemo<MRT_ColumnDef<ShiftData>[]>(
     () => [
       {
         accessorKey: "name",
-        header: "First Name",
-        enableColumnFilter: false,
-      },
-      {
-        accessorKey: "cashTotal.amount",
-        Cell: ({ cell }) => <>${cell.getValue<number>() / 100}</>,
-        header: "Cash Total",
-        enableColumnFilter: false,
-      },
-      {
-        accessorKey: "refundTotal.amount",
-        Cell: ({ cell }) => <>${cell.getValue<number>() / 100}</>,
-        header: "Refund Total",
-        enableColumnFilter: false,
-      },
-      {
-        accessorKey: "shiftData.collectedCash",
-        Cell: ({ cell }) => <>${cell.getValue<number>()}</>,
-        header: "Cash Collected",
+        header: "Shift Name",
         enableColumnFilter: false,
       },
       {
         accessorFn: (row) => {
-          row.center = centerID;
-          return row;
+          if (row.cashTotal && row.cashTotal.amount) {
+            return `$${row.cashTotal.amount / 100}`;
+          }
+
+          return `$0`;
         },
-        Cell: ({ cell }) => <CloseShiftModal shift={cell.getValue()} />,
-        header: "Close Shift Modal",
+        header: "Cash Total",
+        enableColumnFilter: false,
+        Footer: () => (
+          <Text size="lg" fw={700}>
+            ${totalNeeded}
+          </Text>
+        ),
+      },
+      {
+        accessorFn: (row) => {
+          if (row.refundTotal && row.refundTotal.amount) {
+            return `$${row.refundTotal.amount / 100}`;
+          }
+
+          return `$0`;
+        },
+        header: "Refund Total",
+        enableColumnFilter: false,
+        Footer: () => (
+          <Text size="lg" fw={700}>
+            ${totalRefunds}
+          </Text>
+        ),
+      },
+      {
+        accessorFn: (row) => {
+          if (row.shiftData && row.shiftData.collectedCash) {
+            return `$${row.shiftData.collectedCash}`;
+          }
+
+          return `$0`;
+        },
+        header: "Cash Collected",
+        enableColumnFilter: false,
+        Footer: () => (
+          <Text size="lg" fw={700}>
+            ${totalCollected}
+          </Text>
+        ),
+      },
+      {
+        accessorKey: "center",
+        header: "Center",
+        enableColumnFilter: false,
       },
     ],
-    [centerID]
+    [centerID, totalCollected, totalNeeded, totalRefunds]
   );
+
+  const fetchedShifts = data ?? [];
+  const totalRowCount = date.length ?? 0;
 
   const table = useMantineReactTable({
     columns,
-    data,
+    data: fetchedShifts,
     getRowId: (row) => row.name,
-    rowCount,
+    rowCount: totalRowCount,
     onColumnFiltersChange: setColumnFilters,
     onGlobalFilterChange: setGlobalFilter,
     onSortingChange: setSorting,
+    enableHiding: false,
+    enableRowActions: true,
+    initialState: {
+      columnVisibility: {
+        center: false,
+      },
+    },
+    renderRowActions: ({ row }) => (
+      <CloseShiftModal shift={row.original} refetchFn={() => refetch()} />
+    ),
+    renderTopToolbarCustomActions: () => (
+      <Tooltip label="Refresh Data">
+        <ActionIcon onClick={() => refetch()}>
+          <IconRefresh />
+        </ActionIcon>
+      </Tooltip>
+    ),
     state: {
       columnFilters,
       globalFilter,
       isLoading,
       showAlertBanner: isError,
-      showProgressBars: isRefetching,
+      showProgressBars: isFetching,
       sorting,
       pagination: {
         pageIndex: 0,
