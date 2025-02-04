@@ -29,18 +29,7 @@ export default function LeagueLayout({
       >
         <AppShell.Header>
           <Group h="100%" px="md">
-            <Burger
-              opened={hidden}
-              onClick={() => dispatch(setHidden(!hidden))}
-              hiddenFrom="sm"
-              size="sm"
-            />
-            <Burger
-              opened={hidden}
-              onClick={() => dispatch(setHidden(!hidden))}
-              visibleFrom="sm"
-              size="sm"
-            />
+            <Burger opened={hidden} onClick={() => dispatch(setHidden(!hidden))} size="sm" />
           </Group>
         </AppShell.Header>
         <AppShell.Navbar>
