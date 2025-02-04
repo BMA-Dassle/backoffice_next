@@ -39,4 +39,4 @@ COPY --from=builder /usr/src/app/public ./public
 EXPOSE 80
 EXPOSE 443
 
-CMD ["npm", "run", "start"]
+CMD ["dotenvx", "run",  "--env-file=.env.production", "--","npm", "run", "start"]
