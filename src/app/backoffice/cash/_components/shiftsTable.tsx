@@ -34,9 +34,11 @@ const useGetShifts = (centerID: string, date: string) => {
       data: {
         conqueror: [],
         square: [],
+        bmi: [],
       },
     },
-    select: (data: ShiftApiResponse) => data.data.conqueror.concat(data.data.square),
+    select: (data: ShiftApiResponse) =>
+      data.data.conqueror.concat(data.data.square).concat(data.data.bmi),
   });
 };
 

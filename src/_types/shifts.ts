@@ -3,6 +3,7 @@ export type ShiftApiResponse = {
   data: {
     conqueror: ShiftData[];
     square: ShiftData[];
+    bmi: ShiftData[];
   };
 };
 
