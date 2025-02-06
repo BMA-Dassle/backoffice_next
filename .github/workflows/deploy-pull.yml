@@ -1,0 +1,36 @@
+name: Deploy to PR
+
+on:
+  pull_request:
+    branches:
+      - main
+
+concurrency:
+  group: ci-${{ github.event.number }}
+
+env:
+  WEBAPP_NAME: bma-backoffice
+  RESOURCE_GROUP: BMA
+  SLOT_NAME: pr-${{ github.event.number }}
+
+jobs:
+  set-up-test-env:
+    name: Create test env
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Log into Azure CLI with service principal
+        uses: azure/login@v1.1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Create slot on staging site
+        run: az webapp deployment slot create --resource-group $RESOURCE_GROUP  --name $WEBAPP_NAME --slot $SLOT_NAME
+
+  build-deploy-appservice:
+    uses: BMA-Dassle/azure_workflows/.github/workflows/azure-as-deploy.yml@main
+    with:
+      app: bma-backoffice
+      slot: $SLOT_NAME
+
+    secrets: inherit
