@@ -25,12 +25,13 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Create slot on staging site
-        run: az webapp deployment slot create --resource-group $RESOURCE_GROUP  --name $WEBAPP_NAME --slot $SLOT_NAME
+        run: az webapp deployment slot create --resource-group $RESOURCE_GROUP  --name $WEBAPP_NAME --slot $SLOT_NAME --configuration-source $WEBAPP_NAME
 
   build-deploy-appservice:
+    needs: [set-up-test-env]
     uses: BMA-Dassle/azure_workflows/.github/workflows/azure-as-deploy.yml@main
     with:
       app: bma-backoffice
-      slot: $SLOT_NAME
+      slot: ${{github.env.SLOT_NAME}}
 
     secrets: inherit
