@@ -32,6 +32,6 @@ jobs:
     uses: BMA-Dassle/azure_workflows/.github/workflows/azure-as-deploy.yml@main
     with:
       app: bma-backoffice
-      slot: ${{github.env.SLOT_NAME}}
+      slot: pr-${{ github.event.number }}
 
     secrets: inherit
