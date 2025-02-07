@@ -1,0 +1,33 @@
+name: Release to prod
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  WEBAPP_NAME: bma-backoffice
+  RESOURCE_GROUP: BMA
+
+jobs:
+  build-deploy-appservice:
+    uses: BMA-Dassle/azure_workflows/.github/workflows/azure-as-deploy.yml@main
+    with:
+      app: bma-backoffice
+      slot: staging
+
+    secrets: inherit
+
+  release-to-prod:
+    name: Release to prod
+    needs: build-deploy-appservice
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Log into Azure CLI with service principal
+        uses: azure/login@v1.1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Swap slots
+        run: az webapp deployment slot swap -s pr-${{ github.event.number }} -n ${{ env.WEBAPP_NAME }} -g ${{ env.RESOURCE_GROUP }}
