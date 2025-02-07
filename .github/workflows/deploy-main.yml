@@ -17,17 +17,3 @@ jobs:
       slot: staging
 
     secrets: inherit
-
-  release-to-prod:
-    name: Release to prod
-    needs: build-deploy-appservice
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Log into Azure CLI with service principal
-        uses: azure/login@v1.1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-      - name: Swap slots
-        run: az webapp deployment slot swap staging -n ${{ env.WEBAPP_NAME }} -g ${{ env.RESOURCE_GROUP }}
