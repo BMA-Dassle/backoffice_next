@@ -15,7 +15,7 @@ env:
 
 jobs:
   set-up-test-env:
-    name: Create test env
+    name: Create Test Slot
     runs-on: ubuntu-latest
 
     steps:
@@ -28,6 +28,7 @@ jobs:
         run: az webapp deployment slot create --resource-group $RESOURCE_GROUP  --name $WEBAPP_NAME --slot $SLOT_NAME --configuration-source $WEBAPP_NAME
 
   build-deploy-appservice:
+    name: Deploy to PR Slot
     needs: [set-up-test-env]
     uses: BMA-Dassle/azure_workflows/.github/workflows/azure-as-deploy.yml@main
     with:
