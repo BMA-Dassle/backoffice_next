@@ -13,7 +13,12 @@ export function ExpenseBanner() {
           </Text>
           <Text fz="sm" c="dimmed">
             You can also click{" "}
-            <Anchor fz="sm" c="blue.5" underline="always" href={""}>
+            <Anchor
+              fz="sm"
+              c="blue.5"
+              underline="always"
+              href={"https://www.cognitoforms.com/BMA20/CashExpenseReporting"}
+            >
               here
             </Anchor>
             {"."}
