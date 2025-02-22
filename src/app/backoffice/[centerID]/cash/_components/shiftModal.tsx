@@ -1,7 +1,7 @@
 "use client";
 
 import { Button, Group, Modal, NumberInput, Stack } from "@mantine/core";
-import classes from "./closeoutButton.module.css";
+import classes from "./css/closeoutButton.module.css";
 import { useDisclosure } from "@mantine/hooks";
 import { Text } from "@mantine/core";
 import { useState } from "react";

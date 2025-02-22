@@ -31,6 +31,7 @@
   padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm);
   border-radius: var(--mantine-radius-sm);
   font-weight: 500;
+  cursor: pointer;
 
   @mixin hover {
     background-color: var(--mantine-color-blue-7);

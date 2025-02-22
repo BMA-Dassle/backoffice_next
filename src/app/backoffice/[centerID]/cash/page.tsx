@@ -1,11 +1,12 @@
 "use client";
 
-import { Box, Button, Center, Group, Portal, Stack, Title, Text } from "@mantine/core";
-import { CashTable } from "../_components/shiftsTable";
+import { Box, Center, Portal, Stack, Title } from "@mantine/core";
+import { CashTable } from "./_components/shiftsTable";
 import { getLocation } from "@/app/_actions/getLocation";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
-import { useHeadroom, useWindowScroll } from "@mantine/hooks";
+import { useWindowScroll } from "@mantine/hooks";
+import { FlaggedDrawer } from "./_components/drawer";
 
 export function CashPage() {
   const params = useParams<{ centerID: string }>();
@@ -45,6 +46,7 @@ export function CashPage() {
           <Title order={3}>{location?.businessName}</Title>
         </Center>
         {params.centerID && <CashTable centerID={params.centerID} />}
+        <FlaggedDrawer />
       </Stack>
     </>
   );
