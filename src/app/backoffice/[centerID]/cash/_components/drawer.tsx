@@ -1,6 +1,6 @@
 "use client";
 
-import { Text, Anchor, Center, Container, Drawer, Flex, Stack, Title } from "@mantine/core";
+import { Text, Anchor, Drawer, Flex } from "@mantine/core";
 import classes from "./css/drawer.module.css";
 import { useAppSelector } from "@/lib/redux/hooks";
 import { useParams } from "next/navigation";
@@ -20,15 +20,12 @@ export function FlaggedDrawer() {
     return useQuery({
       queryKey: ["flaggedTransactions", centerID, date],
       queryFn: () => getFlaggedPosts(centerID, dayjs(date).format("YYYY-MM-DD")),
-      staleTime: 10 * (60 * 1000),
-      initialData: {
-        count: 0,
-      },
-      select: (data) => data,
+      refetchInterval: 1 * (60 * 1000),
+      initialData: [],
     });
   };
 
-  const { data, isError, isFetching, isLoading, refetch } = useFlaggedPosts(params.centerID, date);
+  const { data, isLoading } = useFlaggedPosts(params.centerID, date);
 
   useEffect(() => {
     if (!isLoading && data.length > 0) {
@@ -53,7 +50,7 @@ export function FlaggedDrawer() {
     >
       <Flex mih={50} gap="md" justify="center" align="center" direction="row" wrap="wrap">
         <Text size="xl" fw={700} c="white">
-          You have {data.length} unresponded flagged transactions. Click{" "}
+          You have {!isLoading && data.length} unresponded flagged transactions. Click{" "}
           <Anchor fw={700} c="blue.5" underline="always" href={logLink}>
             here
           </Anchor>{" "}
