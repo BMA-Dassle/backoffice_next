@@ -17,7 +17,7 @@ export function ExpenseBanner() {
               fz="sm"
               c="blue.5"
               underline="always"
-              href={"https://www.cognitoforms.com/BMA20/CashExpenseReporting"}
+              href={"https://portal.headpinz.com/cash-expense/"}
             >
               here
             </Anchor>
