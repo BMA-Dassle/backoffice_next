@@ -32,6 +32,8 @@ export async function getFlaggedPosts(centerID: string, date: string) {
     },
   };
 
+  console.log(process.env["7SHIFTS_TOKEN"], await get7ShiftsID(centerID));
+
   const response = await fetch(
     `https://api.7shifts.com/v2/company/265994/log_book_posts?location_id=${await get7ShiftsID(
       centerID
