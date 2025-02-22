@@ -41,5 +41,7 @@ export async function getFlaggedPosts(centerID: string, date: string) {
 
   const data = await response.json();
 
+  console.log(data);
+
   return data.data.filter((post: any) => post.log_book_comment_count == 0);
 }
