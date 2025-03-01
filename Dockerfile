@@ -32,8 +32,6 @@ USER node
 # Create app directory
 WORKDIR /usr/src/app
 
-RUN mkdir .next
-
 # Install app dependencies
 COPY .env.production ./
 COPY package*.json ./

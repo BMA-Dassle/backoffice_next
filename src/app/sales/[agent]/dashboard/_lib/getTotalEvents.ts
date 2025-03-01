@@ -58,7 +58,7 @@ export async function getTotalEvents(plannerName: string) {
         WHERE
            EXTRACT(YEAR FROM F_PRJ_DATE) = ? AND
            EXTRACT(MONTH FROM F_PRJ_DATE) = ? AND
-           state.CF_PRJS_NAME IN ('New Lead', 'Contacted', 'Deposit Requested', 'Quote') AND
+           state.CF_PRJS_NAME IN ('New Lead', 'Contacted', 'Deposit Requested', 'Quote', 'Confirmation', 'Confirmation + Waiver', 'Cancellation') AND
            F_US_ID = (SELECT F_US_ID FROM T_USER
                                      WHERE F_US_USERNAME LIKE ?)`,
           [dayjs().year(), dayjs().month() + 1, plannerName]
