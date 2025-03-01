@@ -63,6 +63,10 @@ export async function getLiveTotal(plannerName: string) {
       (bmiOrder: BMIOrder) => resIDs.includes(bmiOrder.bmiID)
     );
 
+    if (bmiOrderIDs.length == 0) {
+      return currency(0);
+    }
+
     const orders = await squareClientV40.orders.batchGet({
       locationId: location.location.id!,
       orderIds: bmiOrderIDs.map((bmiOrder: BMIOrder) => bmiOrder.orderID),
