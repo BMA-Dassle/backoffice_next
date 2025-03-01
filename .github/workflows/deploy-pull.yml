@@ -27,9 +27,23 @@ jobs:
       - name: Create slot on staging site
         run: az webapp deployment slot create --resource-group $RESOURCE_GROUP  --name $WEBAPP_NAME --slot $SLOT_NAME --configuration-source $WEBAPP_NAME
 
+  set-up-test-vnet:
+    name: Create Test VNET Integration
+    needs: [set-up-test-env]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Log into Azure CLI with service principal
+        uses: azure/login@v1.1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Create slot on staging site
+        run: az webapp vnet-integration add --resource-group $RESOURCE_GROUP --name $WEBAPP_NAME --vnet bma-virtual-network --subnet bma-tools --slot $SLOT_NAME
+
   build-deploy-appservice:
     name: Deploy to PR Slot
-    needs: [set-up-test-env]
+    needs: [set-up-test-env, set-up-test-vnet]
     uses: BMA-Dassle/azure_workflows/.github/workflows/azure-as-deploy.yml@main
     with:
       app: bma-backoffice
@@ -39,7 +53,7 @@ jobs:
 
   cleanup:
     runs-on: ubuntu-latest
-    needs: [build-deploy-appservice, set-up-test-env]
+    needs: [build-deploy-appservice, set-up-test-env, set-up-test-vnet]
     permissions:
       pull-requests: write
     steps:

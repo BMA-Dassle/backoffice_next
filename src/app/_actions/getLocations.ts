@@ -1,12 +1,5 @@
-"use server";
-
 export async function getLocations() {
-  const url = new URL(
-    `/v2/square/locations`,
-    process.env.NODE_ENV === "production"
-      ? "https://bma-pandora-api.azurewebsites.net"
-      : "https://parrot-secure-grizzly.ngrok-free.app"
-  );
+  const url = new URL(`/v2/square/locations`, "https://bma-pandora-api.azurewebsites.net");
 
   const response = await fetch(url.href, {
     headers: {
