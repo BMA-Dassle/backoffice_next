@@ -25,7 +25,7 @@ export async function OtherEventsCard({ agent }: { agent: string }) {
       <CardSection p="sm">
         <Group justify="space-between">
           <Title c="dimmed" order={5}>
-            Total Other Events
+            Total Leads
           </Title>
           <IconUsers color="var(--mantine-color-dimmed)" />
         </Group>

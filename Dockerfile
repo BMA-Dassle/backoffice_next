@@ -23,8 +23,6 @@ RUN npm install -g serve
 
 RUN chown -R node:node /home
 
-RUN chown -R node:node /usr
-
 RUN apt-get update && apt-get install -y curl && curl -fsS https://dotenvx.sh/ | sh
 
 RUN apt-get remove curl -y && apt-get autoremove -y
@@ -33,6 +31,8 @@ USER node
 
 # Create app directory
 WORKDIR /usr/src/app
+
+RUN mkdir .next
 
 # Install app dependencies
 COPY .env.production ./
