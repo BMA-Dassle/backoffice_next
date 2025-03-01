@@ -1,12 +1,7 @@
 "use server";
 
 export async function getLeague(): Promise<any> {
-  const url = new URL(
-    `/v2/leagues/`,
-    process.env.NODE_ENV === "production"
-      ? "https://bma-pandora-api.azurewebsites.net"
-      : "https://parrot-secure-grizzly.ngrok-free.app"
-  );
+  const url = new URL(`/v2/leagues/`, "https://bma-pandora-api.azurewebsites.net");
 
   const response = await fetch(url.href, {
     headers: {

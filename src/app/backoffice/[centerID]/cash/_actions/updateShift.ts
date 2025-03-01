@@ -12,9 +12,7 @@ export async function updateShift(
 ) {
   const url = new URL(
     `/v2/shifts/${encodeURIComponent(shiftID)}`,
-    process.env.NODE_ENV === "production"
-      ? "https://bma-pandora-api.azurewebsites.net"
-      : "https://bma-pandora-api.azurewebsites.net"
+    "https://bma-pandora-api.azurewebsites.net"
   );
 
   axios.put(

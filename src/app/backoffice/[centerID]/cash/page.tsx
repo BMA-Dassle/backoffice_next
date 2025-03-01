@@ -8,7 +8,7 @@ import { useParams } from "next/navigation";
 import { useWindowScroll } from "@mantine/hooks";
 import { FlaggedDrawer } from "./_components/drawer";
 
-export function CashPage() {
+function CashPage() {
   const params = useParams<{ centerID: string }>();
 
   const { data: location } = useQuery({

@@ -1,6 +1,7 @@
 import "./globals.css";
 
 import "@mantine/core/styles.css";
+import "@mantine/charts/styles.css";
 
 import {
   ColorSchemeScript,
@@ -47,6 +48,7 @@ export default function RootLayout({
     <html lang="en" {...mantineHtmlProps}>
       <head>
         <ColorSchemeScript />
+        <title>HeadPinz</title>
       </head>
       <body>
         <MantineProvider defaultColorScheme="dark" theme={theme}>

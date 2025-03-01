@@ -1,13 +1,13 @@
 "use client";
 
-import { AppShell, Burger, Container, Drawer, Group, Paper } from "@mantine/core";
+import { AppShell, Burger, Group } from "@mantine/core";
 import { Link, Navbar } from "@/_components/ui/navbar";
 import { useAppSelector, useAppDispatch } from "@/lib/redux/hooks";
 import { setHidden } from "@/lib/redux/reducers/menu";
-import { IconCash, IconPointerDollar } from "@tabler/icons-react";
+import { IconHomeFilled } from "@tabler/icons-react";
 import { useParams, usePathname } from "next/navigation";
 
-export default function BackofficeLayout({
+export default function SalesLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -15,15 +15,10 @@ export default function BackofficeLayout({
   const hidden = useAppSelector((state) => state.menu.hidden);
   const dispatch = useAppDispatch();
   const pathname = usePathname();
-  const params = useParams<{ centerID: string }>();
+  const params = useParams<{ agent: string }>();
 
   const links: Link[] = [
-    { link: `/backoffice/${params.centerID}/cash`, label: "Cash Management", icon: IconCash },
-    {
-      link: `/backoffice/${params.centerID}/expenses`,
-      label: "Expense Form",
-      icon: IconPointerDollar,
-    },
+    { link: `/sales/${params.agent}/dashboard`, label: "Dashboard", icon: IconHomeFilled },
   ];
 
   return (
@@ -44,9 +39,9 @@ export default function BackofficeLayout({
           </Group>
         </AppShell.Header>
         <AppShell.Navbar>
-          <Navbar linksData={links} />
+          <Navbar linksData={links} noDatePicker />
         </AppShell.Navbar>
-        <AppShell.Main>{children}</AppShell.Main>
+        <AppShell.Main className="h-dvh">{children}</AppShell.Main>
       </AppShell>
     </>
   );
