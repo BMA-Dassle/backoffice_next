@@ -1,6 +1,6 @@
 {
-  "name": "league_prizefunds",
-  "version": "0.1.0",
+  "name": "backoffice_next",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "dotenvx run --convention=nextjs -- next dev --turbopack",
@@ -24,6 +24,7 @@
     "@tanstack/react-query": "^5.65.1",
     "@tanstack/react-query-devtools": "^5.66.0",
     "axios": "^1.7.9",
+    "backoffice_next": "file:",
     "clsx": "^2.1.1",
     "currency.js": "^2.0.4",
     "dayjs": "^1.11.13",

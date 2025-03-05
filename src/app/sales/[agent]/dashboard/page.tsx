@@ -9,7 +9,6 @@ import { OtherEventsCard } from "./_components/cards/otherEventsCard";
 import { ConfirmedEventsCard } from "./_components/cards/confirmedEventsCard";
 import { getEventsByTypeTotals } from "./_lib/getEventsByTypeTotals";
 import { cache } from "react";
-import { LiveRevChart } from "./_components/charts/liveRevChart";
 
 export const revalidate = 300;
 export const dynamicParams = true;
