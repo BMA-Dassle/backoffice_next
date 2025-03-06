@@ -1,14 +1,10 @@
-import { Grid, GridCol, Group } from "@mantine/core";
-import { QuotedRevenueCard } from "./_components/cards/quotedCard";
-import { ConfirmedRevenueCard } from "./_components/cards/confirmedCard";
-import { TotalRevenueCard } from "./_components/cards/totalsCard";
-import { GoalCard } from "./_components/cards/goalCard";
-import { LiveRevenueCard } from "./_components/cards/liveCard";
+import { Center, Title } from "@mantine/core";
 import { QtyTypeChart } from "./_components/charts/qtyTypeChart";
-import { OtherEventsCard } from "./_components/cards/otherEventsCard";
-import { ConfirmedEventsCard } from "./_components/cards/confirmedEventsCard";
-import { getEventsByTypeTotals } from "./_lib/getEventsByTypeTotals";
-import { cache } from "react";
+import { getEventsByTypeTotals } from "./_lib/charts/getEventsByTypeTotals";
+import { cache, Suspense } from "react";
+import { getCompositeBreakdownData } from "./_lib/charts/getCompositeBreakdown";
+import { LiveRevChart } from "./_components/charts/liveRevChart";
+import { CardGrid } from "./_components/cardGrid";
 
 export const revalidate = 300;
 export const dynamicParams = true;
@@ -17,39 +13,33 @@ const getEventTotalByType = cache(async (agent: string) => {
   return await getEventsByTypeTotals(agent);
 });
 
+const getCompositeBreakdown = cache(async (agent: string) => {
+  return await getCompositeBreakdownData(agent);
+});
+
 async function DashboardPage({ params }: { params: Promise<{ agent: string }> }) {
   const agent = (await params).agent;
-  const data = await getEventTotalByType(agent);
+  const typeData = await getEventTotalByType(agent);
+  const monthData = await getCompositeBreakdown(agent);
 
   return (
-    <div className="flex flex-col h-full gap-6">
-      <Grid className="" columns={10}>
-        <GridCol span={2}>
-          <ConfirmedRevenueCard agent={agent} />
-        </GridCol>
-        <GridCol span={2}>
-          <QuotedRevenueCard agent={agent} />
-        </GridCol>
-        <GridCol span={2}>
-          <LiveRevenueCard agent={agent} />
-        </GridCol>
-        <GridCol span={2}>
-          <OtherEventsCard agent={agent} />
-        </GridCol>
-        <GridCol span={2}>
-          <ConfirmedEventsCard agent={agent} />
-        </GridCol>
-        <GridCol span={5}>
-          <TotalRevenueCard agent={agent} />
-        </GridCol>
-        <GridCol span={5}>
-          <GoalCard agent={agent} />
-        </GridCol>
-      </Grid>
-      <div className="h-full">
-        <Group grow className="h-full">
-          <QtyTypeChart data={data} />
-        </Group>
+    <div className={`flex flex-col h-[calc((100dvh-60px-1rem)*2)] gap-[calc(2rem)]`}>
+      <div className="flex flex-col min-h-0 h-1/2 gap-[calc(2rem)]">
+        <CardGrid agent={agent} />
+        <Center>
+          <Title>Revenue by Status</Title>
+        </Center>
+        <Suspense>
+          <QtyTypeChart data={typeData} />
+        </Suspense>
+      </div>
+      <div className="flex flex-col min-h-0 h-1/2 gap-[calc(2rem)]">
+        <Center>
+          <Title>Live Revenue VS Expected</Title>
+        </Center>
+        <Suspense>
+          <LiveRevChart data={monthData} />
+        </Suspense>
       </div>
     </div>
   );

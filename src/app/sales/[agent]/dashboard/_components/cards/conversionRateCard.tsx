@@ -1,39 +1,39 @@
 "use server";
 
 import { Card, CardSection, Group, Title } from "@mantine/core";
-import { IconFileDollar } from "@tabler/icons-react";
+import { IconSquarePercentage } from "@tabler/icons-react";
 import React, { cache, Suspense } from "react";
-import { getEventTotals } from "../../_lib/cards/getEventTotals";
+import { getTotalEvents } from "../../_lib/cards/getTotalEvents";
 
-const getQuoted = cache(async (agent: string) => {
-  return await getEventTotals(agent);
+const getEvents = cache(async (agent: string) => {
+  return await getTotalEvents(agent);
 });
 
 async function DataTitle({ agent }: { agent: string }) {
-  const total = await getQuoted(agent);
+  const total = await getEvents(agent);
 
   return (
-    <Title order={3} c="yellow.4">
-      {total.quoted.format()}
+    <Title order={3} c="cyan.6">
+      {Math.round((total.confirmed / total.other) * 100)}%
     </Title>
   );
 }
 
-export async function QuotedRevenueCard({ agent }: { agent: string }) {
+export async function ConversionRateCard({ agent }: { agent: string }) {
   return (
     <Card shadow="sm" padding="xl" radius="md" withBorder className="grow">
       <CardSection p="sm">
         <Group justify="space-between">
           <Title c="dimmed" order={5}>
-            Quoted Revenue
+            Conversion Rate
           </Title>
-          <IconFileDollar color="var(--mantine-color-dimmed)" />
+          <IconSquarePercentage color="var(--mantine-color-dimmed)" />
         </Group>
       </CardSection>
       <CardSection p="sm">
         <Suspense
           fallback={
-            <Title order={3} c="yellow.4">
+            <Title order={3} c="cyan.6">
               Loading...
             </Title>
           }

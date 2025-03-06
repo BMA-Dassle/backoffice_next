@@ -15,11 +15,6 @@ import StoreProvider from "@/_components/providers/storeProvider";
 import { DatesProvider } from "@mantine/dates";
 import ReactQueryProvider from "./queryProvider";
 
-export const metadata = {
-  title: "My Mantine app",
-  description: "I have followed setup instructions carefully",
-};
-
 const myColor: MantineColorsTuple = [
   "#FFFFFF",
   "#E3F2FD",

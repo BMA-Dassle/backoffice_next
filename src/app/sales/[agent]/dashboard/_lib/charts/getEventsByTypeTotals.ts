@@ -1,10 +1,10 @@
 import { Location } from "square/legacy";
 import { runQuery } from "@/lib/firebird";
 import { getLocations } from "@/app/_actions/getLocations";
-import { LiveLocation, TypeTotal } from "./types";
 import dayjs from "dayjs";
 import { SquareClient } from "square";
 import currency from "currency.js";
+import { LiveLocation, TypeTotal } from "../types";
 
 const squareClientV40 = new SquareClient({
   token: process.env["SQUARE_TOKEN"]!,
@@ -33,7 +33,7 @@ export async function getEventsByTypeTotals(plannerName: string) {
     Contacted: currency(0),
     "Deposit Requested": currency(0),
     Quote: currency(0),
-    Confirmation: currency(0),
+    Confirmed: currency(0),
   };
 
   for (const location of liveLocations) {
@@ -56,7 +56,7 @@ export async function getEventsByTypeTotals(plannerName: string) {
 
     for (const type of eventTotalTypes) {
       if (type.STATE.includes("Confirmation")) {
-        typeTotals["Confirmation"] = typeTotals["Confirmation"].add(currency(type.TOTAL));
+        typeTotals["Confirmed"] = typeTotals["Confirmed"].add(currency(type.TOTAL));
       } else {
         typeTotals[type.STATE] = typeTotals[type.STATE].add(currency(type.TOTAL));
       }

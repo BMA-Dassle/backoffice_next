@@ -34,7 +34,12 @@ export async function getEventTotals(plannerName: string) {
         await runQuery(
           bmiIP,
           `SELECT
-        SUM(COALESCE((SELECT SUM(product.CF_PRJPR_TOTAL) FROM T_PROJECT_PRODUCT product WHERE product.F_PRJ_ID = project.F_PRJ_ID), 0)) AS TOTAL
+        SUM(COALESCE((SELECT SUM(prjProduct.CF_PRJPR_TOTAL)
+                      FROM T_PROJECT_PRODUCT prjProduct
+                      INNER JOIN T_PRODUCT product ON product.F_PR_ID = prjProduct.F_PR_ID
+                      WHERE prjProduct.F_PRJ_ID = project.F_PRJ_ID AND
+                            product.CF_PR_NAME NOT LIKE 'Gratuity'
+                      ), 0)) AS TOTAL
         FROM T_PROJECT project
         INNER JOIN T_PROJECT_STATE state ON state.F_PRJS_ID = project.F_PRJS_ID
         WHERE
@@ -53,7 +58,12 @@ export async function getEventTotals(plannerName: string) {
         await runQuery(
           bmiIP,
           `SELECT
-            SUM(COALESCE((SELECT SUM(product.CF_PRJPR_TOTAL) FROM T_PROJECT_PRODUCT product WHERE product.F_PRJ_ID = project.F_PRJ_ID), 0)) AS TOTAL
+            SUM(COALESCE((SELECT SUM(prjProduct.CF_PRJPR_TOTAL)
+                      FROM T_PROJECT_PRODUCT prjProduct
+                      INNER JOIN T_PRODUCT product ON product.F_PR_ID = prjProduct.F_PR_ID
+                      WHERE prjProduct.F_PRJ_ID = project.F_PRJ_ID AND
+                            product.CF_PR_NAME NOT LIKE 'Gratuity'
+                      ), 0)) AS TOTAL
             FROM T_PROJECT project
             INNER JOIN T_PROJECT_STATE state ON state.F_PRJS_ID = project.F_PRJS_ID
             WHERE

@@ -1,7 +1,7 @@
 import { Location } from "square/legacy";
 import { runQuery } from "@/lib/firebird";
 import { getLocations } from "@/app/_actions/getLocations";
-import { BMIOrder, LiveLocation } from "./types";
+import { BMIOrder, LiveLocation } from "../types";
 import dayjs from "dayjs";
 import { SquareClient } from "square";
 import currency from "currency.js";
@@ -79,6 +79,15 @@ export async function getLiveTotal(plannerName: string) {
         const totalTip = currency(Number(order!.totalTipMoney!.amount!), { fromCents: true });
 
         let totalDeposit = currency(0);
+        let totalGratuity = currency(0);
+        if (order.lineItems) {
+          const orderLine = order!.lineItems.find((item: any) => item.name.includes("Gratuity"));
+
+          if (orderLine) {
+            totalGratuity = currency(Number(orderLine.basePriceMoney.amount), { fromCents: true });
+          }
+        }
+
         if (order.discounts) {
           const discountLine = order!.discounts.find((discount: any) =>
             discount.name.includes("Deposit")
@@ -91,7 +100,11 @@ export async function getLiveTotal(plannerName: string) {
           }
         }
 
-        const orderTotal = totalOrder.subtract(totalTax).subtract(totalTip).add(totalDeposit);
+        const orderTotal = totalOrder
+          .subtract(totalTax)
+          .subtract(totalTip)
+          .add(totalDeposit)
+          .subtract(totalGratuity);
 
         return partialSum.add(orderTotal);
       }, currency(0))

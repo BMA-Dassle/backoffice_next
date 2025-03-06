@@ -3,7 +3,7 @@
 import { Card, CardSection, Group, Title } from "@mantine/core";
 import { IconUsers } from "@tabler/icons-react";
 import React, { cache, Suspense } from "react";
-import { getTotalEvents } from "../../_lib/getTotalEvents";
+import { getTotalEvents } from "../../_lib/cards/getTotalEvents";
 
 const getEvents = cache(async (agent: string) => {
   return await getTotalEvents(agent);
@@ -25,7 +25,7 @@ export async function ConfirmedEventsCard({ agent }: { agent: string }) {
       <CardSection p="sm">
         <Group justify="space-between">
           <Title c="dimmed" order={5}>
-            Total Confirmed Events
+            Total Confirmed
           </Title>
           <IconUsers color="var(--mantine-color-dimmed)" />
         </Group>

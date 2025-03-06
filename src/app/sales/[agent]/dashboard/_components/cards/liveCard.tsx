@@ -3,7 +3,7 @@
 import { Card, CardSection, Group, Title } from "@mantine/core";
 import { IconBoxModel2 } from "@tabler/icons-react";
 import React, { Suspense } from "react";
-import { getLiveTotal } from "../../_lib/getLiveTotal";
+import { getLiveTotal } from "../../_lib/cards/getLiveTotal";
 import { unstable_cache } from "next/cache";
 
 const getLive = unstable_cache(
@@ -11,7 +11,7 @@ const getLive = unstable_cache(
     return (await getLiveTotal(agent)).format();
   },
   ["dashboardLiveTotal"],
-  { revalidate: 1, tags: ["dashboardLiveTotal"] }
+  { revalidate: 60, tags: ["dashboardLiveTotal"] }
 );
 
 async function DataTitle({ agent }: { agent: string }) {

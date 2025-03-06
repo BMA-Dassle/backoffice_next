@@ -3,7 +3,7 @@
 import { Card, CardSection, Group, Title } from "@mantine/core";
 import { IconUsers } from "@tabler/icons-react";
 import React, { cache, Suspense } from "react";
-import { getTotalEvents } from "../../_lib/getTotalEvents";
+import { getTotalEvents } from "../../_lib/cards/getTotalEvents";
 
 const getEvents = cache(async (agent: string) => {
   return await getTotalEvents(agent);

@@ -7,7 +7,7 @@ import React from "react";
 export function QtyTypeChart({ data }: { data: any }) {
   return (
     <BarChart
-      className="h-full"
+      className="min-h-0 h-full"
       data={data}
       dataKey="state"
       orientation="vertical"
@@ -20,7 +20,7 @@ export function QtyTypeChart({ data }: { data: any }) {
         { name: "Contacted", color: "blue.4", label: "Total" },
         { name: "Quote", color: "yellow.4", label: "Total" },
         { name: "Deposit Requested", color: "orange.5", label: "Total" },
-        { name: "Confirmation", color: "green.5", label: "Total" },
+        { name: "Confirmed", color: "green.5", label: "Total" },
       ]}
     />
   );
