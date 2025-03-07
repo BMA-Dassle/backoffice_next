@@ -20,7 +20,7 @@ export default function SalesLayout({
   return (
     <>
       <title>{links.find((link) => link.link == pathname)?.label || "None"}</title>
-      <CustomAppShell links={links} children={children} />
+      <CustomAppShell links={links}>{children}</CustomAppShell>
     </>
   );
 }
