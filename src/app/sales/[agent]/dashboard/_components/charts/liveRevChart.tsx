@@ -14,10 +14,10 @@ export function LiveRevChart({ data }: { data: any }) {
       withLegend
       valueFormatter={(value) => currency(value).format()}
       maxBarWidth={30}
-      curveType="natural"
+      curveType="monotone"
       series={[
-        { name: "live", color: "rgb(18, 120, 255)", type: "bar", label: "Actual" },
-        { name: "expected", color: "orange.8", type: "line", label: "Expected" },
+        { name: "live", color: "rgb(18, 120, 255)", type: "bar", label: "Live" },
+        { name: "expected", color: "orange.8", type: "line", label: "Confirmed" },
       ]}
     />
   );

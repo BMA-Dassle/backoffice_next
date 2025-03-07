@@ -47,14 +47,13 @@ export async function getLiveTotal(plannerName: string) {
       await runQuery(
         location.bmiIP,
         `SELECT
-        project.F_PRJ_NUMBER as ID
-        FROM T_PROJECT project
-        INNER JOIN T_PROJECT_STATE state ON state.F_PRJS_ID = project.F_PRJS_ID
-        WHERE
-           EXTRACT(YEAR FROM F_PRJ_DATE) = ? AND
-           EXTRACT(MONTH FROM F_PRJ_DATE) = ? AND
-           F_US_ID = (SELECT F_US_ID FROM T_USER
-                                     WHERE F_US_USERNAME LIKE ?)`,
+            project.F_PRJ_NUMBER as ID
+            FROM T_PROJECT project
+            WHERE
+               EXTRACT(YEAR FROM F_PRJ_DATE) = ? AND
+               EXTRACT(MONTH FROM F_PRJ_DATE) = ? AND
+               F_US_ID = (SELECT F_US_ID FROM T_USER
+                                         WHERE F_US_USERNAME LIKE ?)`,
         [dayjs().year(), dayjs().month() + 1, plannerName]
       )
     ).map((resID: any) => resID.ID);
@@ -64,7 +63,8 @@ export async function getLiveTotal(plannerName: string) {
     );
 
     if (bmiOrderIDs.length == 0) {
-      return currency(0);
+      total = total.add(currency(0));
+      continue;
     }
 
     const orders = await squareClientV40.orders.batchGet({
