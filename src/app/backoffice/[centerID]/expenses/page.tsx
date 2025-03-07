@@ -2,7 +2,7 @@
 
 import { ExpenseBanner } from "./_components/expenseBanner";
 
-export function ExpensePage() {
+function ExpensePage() {
   return (
     <>
       <ExpenseBanner />

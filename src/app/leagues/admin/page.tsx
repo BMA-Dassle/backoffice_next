@@ -1,4 +1,4 @@
-export async function Test({ params }: { params: Promise<{ centerID: string }> }) {
+async function Test({ params }: { params: Promise<{ centerID: string }> }) {
   return <></>;
 }
 

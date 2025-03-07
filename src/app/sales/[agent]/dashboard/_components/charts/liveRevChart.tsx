@@ -1,22 +1,24 @@
 "use client";
 
 import { CompositeChart } from "@mantine/charts";
+import currency from "currency.js";
 import React from "react";
-import { data } from "../../_lib/data";
 
-export function LiveRevChart() {
+export function LiveRevChart({ data }: { data: any }) {
   return (
     <CompositeChart
-      className="h-full"
+      className="min-h-0 h-full"
       data={data}
       dataKey="date"
+      tooltipAnimationDuration={200}
+      withLegend
+      valueFormatter={(value) => currency(value).format()}
       maxBarWidth={30}
+      curveType="monotone"
       series={[
-        { name: "Tomatoes", color: "rgba(18, 120, 255, 0.2)", type: "bar" },
-        { name: "Apples", color: "red.8", type: "line" },
-        { name: "Oranges", color: "yellow.8", type: "area" },
+        { name: "live", color: "rgb(18, 120, 255)", type: "bar", label: "Live" },
+        { name: "expected", color: "orange.8", type: "line", label: "Confirmed" },
       ]}
-      curveType="linear"
     />
   );
 }

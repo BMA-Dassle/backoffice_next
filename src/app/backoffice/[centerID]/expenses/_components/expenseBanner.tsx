@@ -1,6 +1,5 @@
-import { Anchor, Button, Group, Image, Text, TextInput, Title } from "@mantine/core";
+import { Anchor, Group, Image, Text, Title } from "@mantine/core";
 import classes from "./css/expenseBanner.module.css";
-import NextImage from "next/image";
 
 export function ExpenseBanner() {
   return (

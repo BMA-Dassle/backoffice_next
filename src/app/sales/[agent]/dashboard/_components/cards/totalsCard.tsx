@@ -3,7 +3,7 @@
 import { Card, CardSection, Container, Group, Title } from "@mantine/core";
 import { IconCoin } from "@tabler/icons-react";
 import React, { cache, Suspense } from "react";
-import { getEventTotals } from "../../_lib/getEventTotals";
+import { getEventTotals } from "../../_lib/cards/getEventTotals";
 import { RevenueBreakdownBar } from "../revenueBreakdown";
 
 const getTotals = cache(async (agent: string) => {
@@ -43,7 +43,9 @@ export async function TotalRevenueCard({ agent }: { agent: string }) {
             <DataTitle agent={agent} />
           </Suspense>
           <Container w="auto" h="2em">
-            <RevenueBreakdownBar agent={agent} />
+            <Suspense>
+              <RevenueBreakdownBar agent={agent} />
+            </Suspense>
           </Container>
         </Group>
       </CardSection>

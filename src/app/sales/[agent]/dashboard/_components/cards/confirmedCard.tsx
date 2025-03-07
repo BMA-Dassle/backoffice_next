@@ -3,7 +3,7 @@
 import { Card, CardSection, Group, Skeleton, Title } from "@mantine/core";
 import { IconCalendarDollar } from "@tabler/icons-react";
 import React, { cache, Suspense } from "react";
-import { getEventTotals } from "../../_lib/getEventTotals";
+import { getEventTotals } from "../../_lib/cards/getEventTotals";
 
 const getConfirmed = cache(async (agent: string) => {
   return await getEventTotals(agent);

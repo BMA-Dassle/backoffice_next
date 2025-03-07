@@ -1,6 +1,6 @@
 "use client";
 
-export function Home() {
+function Home() {
   return <></>;
 }
 

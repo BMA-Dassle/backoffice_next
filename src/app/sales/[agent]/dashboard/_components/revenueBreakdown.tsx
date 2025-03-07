@@ -2,7 +2,7 @@
 
 import { ProgressRoot, ProgressSection, Tooltip } from "@mantine/core";
 import React, { cache } from "react";
-import { getEventTotals } from "../_lib/getEventTotals";
+import { getEventTotals } from "../_lib/cards/getEventTotals";
 
 const getTotals = cache(async (agent: string) => {
   return await getEventTotals(agent);
