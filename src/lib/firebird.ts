@@ -1,6 +1,6 @@
 import * as Firebird from "node-firebird";
 
-let options: any = {};
+const options: any = {};
 
 options.port = 3050;
 options.database = "c:\\fast\\fast.fdb";
@@ -19,7 +19,7 @@ async function createPool(ip: string) {
   console.log("NEW POOL");
   options.host = ip;
 
-  var pool = Firebird.pool(5, options);
+  const pool = Firebird.pool(5, options);
 
   if (poolMap.get(ip)) {
     poolMap.get(ip)!.destroy();
@@ -42,7 +42,7 @@ export async function readBlob(blob: any): Promise<string> {
     blob(function (err: any, name: any, e: any) {
       if (err) throw err;
       console.log("Blob name: " + name);
-      let chunks: any = [];
+      const chunks: any = [];
       console.log("Reading blob...");
 
       e.on("data", function (chunk: Buffer) {
@@ -59,7 +59,7 @@ export async function readBlob(blob: any): Promise<string> {
 
 export async function runQuery(center: string, query: string, params: any[] = []): Promise<any[]> {
   return new Promise(async (resolve, reject) => {
-    var pool = await getPoolValue(center);
+    const pool = await getPoolValue(center);
 
     setTimeout(() => reject("Rquest Timeout"), 60000);
 
@@ -87,7 +87,7 @@ export async function runExecute(
   params: any[] = []
 ): Promise<any[]> {
   return new Promise(async (resolve, reject) => {
-    var pool = await getPoolValue(center);
+    const pool = await getPoolValue(center);
 
     setTimeout(() => reject("Rquest Timeout"), 60000);
 
@@ -115,7 +115,7 @@ export async function runQueryWithBlob(
   params: any[] = []
 ): Promise<any[]> {
   return new Promise(async (resolve, reject) => {
-    var pool = await getPoolValue(center);
+    const pool = await getPoolValue(center);
 
     setTimeout(() => reject("Rquest Timeout"), 60000);
 
