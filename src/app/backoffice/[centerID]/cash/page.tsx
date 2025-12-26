@@ -1,13 +1,12 @@
 "use client";
 
-import { Alert, Box, Center, Portal, Stack, Title } from "@mantine/core";
+import { Box, Center, Portal, Stack, Title } from "@mantine/core";
 import { CashTable } from "./_components/shiftsTable";
 import { getLocation } from "@/app/_actions/getLocation";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import { useWindowScroll } from "@mantine/hooks";
-import { FlaggedDrawer } from "./_components/drawer";
-import { IconAlertCircle } from "@tabler/icons-react";
+//import { FlaggedDrawer } from "./_components/drawer";
 import { useAppSelector } from "@/lib/redux/hooks";
 import { getOpenChecks } from "./_actions/getOpen";
 
@@ -68,7 +67,7 @@ function CashPage() {
           </Alert>
         </Center> */}
         {params.centerID && <CashTable centerID={params.centerID} />}
-        <FlaggedDrawer />
+        {/*<FlaggedDrawer />*/}
       </Stack>
     </>
   );
