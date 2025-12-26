@@ -20,7 +20,7 @@ export function FlaggedDrawer() {
     return useQuery({
       queryKey: ["flaggedTransactions", centerID, date],
       queryFn: () => getFlaggedPosts(centerID, dayjs(date).format("YYYY-MM-DD")),
-      refetchInterval: 1 * (60 * 1000),
+      enabled: false,
       initialData: [],
     });
   };
