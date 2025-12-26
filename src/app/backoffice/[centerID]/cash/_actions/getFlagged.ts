@@ -26,10 +26,10 @@ async function get7ShiftsID(centerID: string) {
 export async function getFlaggedPosts(centerID: string, date: string) {
   const options = {
     method: "GET",
-    headers: {
-      accept: "application/json",
-      authorization: `Bearer ${process.env["7SHIFTS_TOKEN"]}`,
-    },
+    headers: new Headers({
+      Authorization: `Bearer ${process.env["7SHIFTS_TOKEN"]}`,
+      Accept: "application/json",
+    }),
   };
 
   const response = await fetch(

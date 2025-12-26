@@ -1,11 +1,10 @@
 "use client";
 
-import { AppShell, Burger, Center, Group, Paper } from "@mantine/core";
+import { AppShell, Burger, Group } from "@mantine/core";
 import { Link, Navbar } from "@/_components/ui/navbar";
 import { useAppSelector, useAppDispatch } from "@/lib/redux/hooks";
 import { setHidden } from "@/lib/redux/reducers/menu";
-import { IconCash, IconCoins, IconTrophy } from "@tabler/icons-react";
-import { getLocation } from "@/app/_actions/getLocation";
+import { IconCoins, IconTrophy } from "@tabler/icons-react";
 
 export default function LeagueLayout({
   children,
