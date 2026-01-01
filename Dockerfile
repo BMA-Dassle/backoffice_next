@@ -17,7 +17,7 @@ COPY . .
 
 RUN npm run build
 
-FROM node:slim
+FROM node:lts-slim
 
 RUN npm install -g serve
 
