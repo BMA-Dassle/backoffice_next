@@ -7,7 +7,12 @@ export async function getGoalData(agent: string, year: number, month: number): P
   url.searchParams.append("year", String(year));
   url.searchParams.append("month", String(month));
 
-  const response = await fetch(url.href);
+  const response = await fetch(url.href, {
+    headers: {
+      "ngrok-skip-browser-warning": "69420",
+      "Authorization": `Bearer ${process.env["PANDORA_KEY"]}`,
+    },
+  });
 
   const data = await response.json();
 

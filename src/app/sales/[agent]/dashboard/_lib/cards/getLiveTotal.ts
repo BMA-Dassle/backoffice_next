@@ -16,6 +16,7 @@ async function getBMIOrders(location: string) {
   const response = await fetch(url.href, {
     headers: {
       "ngrok-skip-browser-warning": "69420",
+      "Authorization": `Bearer ${process.env["PANDORA_KEY"]}`,
     },
   });
 
