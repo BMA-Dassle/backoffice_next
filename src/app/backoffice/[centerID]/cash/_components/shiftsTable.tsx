@@ -28,7 +28,7 @@ const useGetShifts = (centerID: string, date: string) => {
   return useQuery({
     queryKey: ["shifts"],
     queryFn: () => getShiftReport(centerID, dayjs(date).format("YYYY-MM-DD")),
-    staleTime: 1 * (60 * 1000),
+    staleTime: 1 * (300 * 1000),
     initialData: {
       success: false,
       data: {
