@@ -8,7 +8,7 @@ WORKDIR /usr/src/app
 # where available (npm@5+)
 COPY package*.json ./
 
-RUN npm ci && npm install typescript -g
+RUN npm ci --legacy-peer-deps && npm install typescript -g
 # If you are building your code for production
 # RUN npm ci --omit=dev
 
@@ -36,7 +36,7 @@ WORKDIR /usr/src/app
 COPY .env.production ./
 COPY package*.json ./
 
-RUN npm ci --omit=dev
+RUN npm ci --omit=dev --legacy-peer-deps
 
 COPY --from=builder /usr/src/app/.next ./.next
 COPY --from=builder /usr/src/app/public ./public
